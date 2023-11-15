@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Phrase, Category
 
-# Register your models here.
+admin.site.register(Phrase)
+admin.site.register(Category)
