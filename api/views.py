@@ -15,6 +15,10 @@ class PhraseListCreate(generics.ListCreateAPIView):
     queryset = Phrase.objects.all()
     serializer_class = PhraseSerializer
 
+class PhraseListView(generics.ListAPIView):
+    queryset = Phrase.objects.all()
+    serializer_class = PhraseSerializer
+    permission_classes = [IsAuthenticated]
 
 class CreateUserView(APIView):
     permission_classes = [AllowAny]
