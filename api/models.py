@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -15,3 +16,13 @@ class Phrase(models.Model):
 
     def __str__(self):
         return self.caption_en
+
+class Playlist(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='playlists')
+    name = models.CharField(max_length=255)
+    cover_image = models.ImageField(upload_to='playlist_covers/')
+    phrases = models.ManyToManyField(Phrase, blank=True)
+    views = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
