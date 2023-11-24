@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Phrase, Category, Playlist
+from .models import Phrase, Category, Playlist, Favorite
 
 
 class PlaylistAdminForm(forms.ModelForm):
@@ -17,3 +17,4 @@ class PlaylistAdmin(admin.ModelAdmin):
 
 admin.site.register(Phrase)
 admin.site.register(Category)
+admin.site.register(Favorite)

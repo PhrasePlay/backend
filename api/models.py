@@ -26,3 +26,14 @@ class Playlist(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorited_playlists')
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE, related_name='favorited_by')
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'playlist') 
+
+    def __str__(self):
+        return f"{self.user.username} favorite {self.playlist.name}"
