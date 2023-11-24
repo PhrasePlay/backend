@@ -1,13 +1,10 @@
-from rest_framework import generics
-from .models import Phrase
-from .serializers import PhraseSerializer
-from rest_framework import status
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
-from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
+from .models import Phrase, Favorite
+from .serializers import UserSerializer, FavoriteSerializer, PhraseSerializer
 
 
 class PhraseListCreate(generics.ListCreateAPIView):
@@ -29,3 +26,14 @@ class CreateUserView(APIView):
             user_serializer.save()
             return Response(user_serializer.data, status=status.HTTP_201_CREATED)
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserFavoriteListView(generics.ListAPIView):
+    serializer_class = FavoriteSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        if self.request.user.id != user_id:
+            raise permissions.PermissionDenied('Você não tem permissão para ver esses favoritos.')
+        
+        return Favorite.objects.filter(user__id=user_id)
