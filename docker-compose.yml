@@ -24,6 +24,8 @@ services:
       - DJANGO_DB_NAME=phraseplay_db
       - DJANGO_DB_USER=phraseplay_user
       - DJANGO_DB_PASSWORD=phraseplay_password
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
 
 volumes:
   postgres_data:
